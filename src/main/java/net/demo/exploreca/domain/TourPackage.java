@@ -12,14 +12,18 @@ import javax.persistence.Id;
  */
 @Entity
 public class TourPackage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     private String code;
 
     @Column
     private String name;
 
+    protected TourPackage() {}
+
     public TourPackage(String code, String name) {
-        super();
         this.code = code;
         this.name = name;
     }
