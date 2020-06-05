@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "explorecali.importjsonfile",
+  "type": "java.lang.String",
+  "description": "Path to json with initial data for H2 inmemory database"
+}]}
