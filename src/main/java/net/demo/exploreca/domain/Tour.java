@@ -53,9 +53,8 @@ public class Tour implements Serializable {
 
     protected Tour() {}
 
-    public Tour(Long id, String title, String description, String blurb, Integer price, String duration,
+    public Tour(String title, String description, String blurb, Integer price, String duration,
             String bullets, String keywords, TourPackage tourPackage, Difficulty difficulty, Region region) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.blurb = blurb;
