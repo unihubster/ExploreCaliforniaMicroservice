@@ -1,6 +1,5 @@
 package net.demo.explorecali.domain;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,9 +10,7 @@ import javax.persistence.Id;
  * A Classification of Tours.
  */
 @Entity
-public class TourPackage implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TourPackage {
 
     @Id
     private String code;

@@ -16,12 +16,9 @@ public class TourPackageService {
     }
 
     public TourPackage createTourPackage(String code, String name) {
-        if (tourPackageRepository.existsById(code)) {
-            return null; // TODO replace "return null" if it's possible with
-            // return tourPackageRepository.findById(code);
-        } else {
-            return tourPackageRepository.save(new TourPackage(code, name));
-        }
+        return tourPackageRepository
+                .findById(code)
+                .orElse(tourPackageRepository.save(new TourPackage(code, name)));
     }
 
     public Iterable<TourPackage> getAllTourPackagies() {
