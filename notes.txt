@@ -1,0 +1,2 @@
+cmd command to start Spring Boot app on another port:
+java -jar -Dserver.port=9090 exploreca-1.0.0.jar
