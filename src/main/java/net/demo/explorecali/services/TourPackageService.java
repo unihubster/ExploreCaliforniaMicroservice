@@ -1,10 +1,10 @@
-package net.demo.exploreca.services;
+package net.demo.explorecali.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.demo.exploreca.domain.TourPackage;
-import net.demo.exploreca.repositories.TourPackageRepository;
+import net.demo.explorecali.domain.TourPackage;
+import net.demo.explorecali.repositories.TourPackageRepository;
 
 @Service
 public class TourPackageService {

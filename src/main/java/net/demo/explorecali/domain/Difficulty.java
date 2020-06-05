@@ -1,4 +1,4 @@
-package net.demo.exploreca.domain;
+package net.demo.explorecali.domain;
 
 /**
  * Enumeration of the level of effort.

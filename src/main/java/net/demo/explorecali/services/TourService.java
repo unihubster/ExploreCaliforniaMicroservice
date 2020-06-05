@@ -1,14 +1,14 @@
-package net.demo.exploreca.services;
+package net.demo.explorecali.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.demo.exploreca.domain.Difficulty;
-import net.demo.exploreca.domain.Region;
-import net.demo.exploreca.domain.Tour;
-import net.demo.exploreca.domain.TourPackage;
-import net.demo.exploreca.repositories.TourPackageRepository;
-import net.demo.exploreca.repositories.TourRepository;
+import net.demo.explorecali.domain.Difficulty;
+import net.demo.explorecali.domain.Region;
+import net.demo.explorecali.domain.Tour;
+import net.demo.explorecali.domain.TourPackage;
+import net.demo.explorecali.repositories.TourPackageRepository;
+import net.demo.explorecali.repositories.TourRepository;
 
 @Service
 public class TourService {

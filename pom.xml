@@ -10,7 +10,7 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>net.demo</groupId>
-    <artifactId>exploreca</artifactId>
+    <artifactId>explorecali</artifactId>
     <version>1.0.0</version>
     <name>ExploreCaliforniaMicroservice</name>
     <description>Explore California Microservice</description>
