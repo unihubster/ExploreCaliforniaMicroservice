@@ -8,6 +8,6 @@ import net.demo.explorecali.domain.TourPackage;
 
 public interface TourPackageRepository extends CrudRepository<TourPackage, String> {
 
-    Optional<TourPackage> findByName(String tourPackageName);
+    Optional<TourPackage> findByName(String name);
 
 }
