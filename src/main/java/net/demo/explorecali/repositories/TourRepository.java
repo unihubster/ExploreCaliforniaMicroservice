@@ -1,13 +1,13 @@
 package net.demo.explorecali.repositories;
 
-import java.util.List;
-
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import net.demo.explorecali.domain.Tour;
 
-public interface TourRepository extends CrudRepository<Tour, Long> {
+public interface TourRepository extends PagingAndSortingRepository<Tour, Long> {
 
-    List<Tour> findByTourPackageCode(String code);
+    Page<Tour> findByTourPackageCode(String code, Pageable pageable);
 
 }
