@@ -49,7 +49,7 @@ public class TourRatingController {
      * @param ex exception
      * @return Error message String.
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     public String handleNoSuchElement(NoSuchElementException ex) {
         return ex.getMessage();

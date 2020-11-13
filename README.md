@@ -14,27 +14,27 @@ Spring DATA REST provides HATEOAS.
 
 ### Examples of API links:
 
-GET:
+#### GET:
 
-http://localhost:8080/explorecali/api/v1.0
+- http://localhost:8080/explorecali/api/v1.0
 
-http://localhost:8080/explorecali/api/v1.0/packages/BC
+- http://localhost:8080/explorecali/api/v1.0/packages/BC
 
-http://localhost:8080/explorecali/api/v1.0/packages/search/
+- http://localhost:8080/explorecali/api/v1.0/packages/search/
 
-http://localhost:8080/explorecali/api/v1.0/packages/search/findByName?name=Backpack%20Cal
+- http://localhost:8080/explorecali/api/v1.0/packages/search/findByName?name=Backpack%20Cal
 
-http://localhost:8080/explorecali/api/v1.0/tours
+- http://localhost:8080/explorecali/api/v1.0/tours
 
-http://localhost:8080/explorecali/api/v1.0/tours/search
+- http://localhost:8080/explorecali/api/v1.0/tours/search
 
-http://localhost:8080/explorecali/api/v1.0/tours/search/findByTourPackageCode?code=BC
+- http://localhost:8080/explorecali/api/v1.0/tours/search/findByTourPackageCode?code=BC
 
-http://localhost:8080/explorecali/api/v1.0/tours?page=2&size=3&sort=title,desc
+- http://localhost:8080/explorecali/api/v1.0/tours?page=2&size=3&sort=title,desc
 
-Post
+#### POST
 
-http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
 with JSON body
 {
     "score": 5,
@@ -42,10 +42,14 @@ with JSON body
     "customerId": 123
 }
 
-http://localhost:8080/explorecali/api/v1.0/tours/11111/ratings with JSON body.
-400 status is returned because there is no such tour Id
+- http://localhost:8080/explorecali/api/v1.0/tours/11111/ratings with JSON body.
+404 http status is returned because there is no such tour Id
 
-DELETE
+#### DELETE
 
-http://localhost:8080/explorecali/api/v1.0/packages/BC doesn't delete because not allowed
+- http://localhost:8080/explorecali/api/v1.0/packages/BC doesn't delete because not allowed
 
+
+### ToDo:
+* Apply Builder patterns for the entities
+* Improve H2 database initialization with data
