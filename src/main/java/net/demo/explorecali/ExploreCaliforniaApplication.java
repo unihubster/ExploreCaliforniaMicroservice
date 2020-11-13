@@ -63,16 +63,19 @@ public class ExploreCaliforniaApplication implements CommandLineRunner {
      * Create tour entities from an external file
      */
     private void createTours(String fileToImport) throws IOException {
-        TourFromFile.read(fileToImport).forEach(importedTour -> tourService.createTour(importedTour.getTitle(),
-                importedTour.getDescription(),
-                importedTour.getBlurb(),
-                importedTour.getPrice(),
-                importedTour.getLength(),
-                importedTour.getBullets(),
-                importedTour.getKeywords(),
-                importedTour.getPackageType(),
-                importedTour.getDifficulty(),
-                importedTour.getRegion()));
+        TourFromFile
+                .read(fileToImport)
+                .forEach(importedTour -> tourService
+                        .createTour(importedTour.getTitle(),
+                                importedTour.getDescription(),
+                                importedTour.getBlurb(),
+                                importedTour.getPrice(),
+                                importedTour.getLength(),
+                                importedTour.getBullets(),
+                                importedTour.getKeywords(),
+                                importedTour.getPackageType(),
+                                importedTour.getDifficulty(),
+                                importedTour.getRegion()));
     }
 
     /**
@@ -85,9 +88,11 @@ public class ExploreCaliforniaApplication implements CommandLineRunner {
 
         // reader
         static List<TourFromFile> read(String fileToImport) throws IOException {
-            return new ObjectMapper().setVisibility(FIELD, ANY).readValue(new FileInputStream(fileToImport),
-                    new TypeReference<List<TourFromFile>>() {
-                    });
+            return new ObjectMapper()
+                    .setVisibility(FIELD, ANY)
+                    .readValue(new FileInputStream(fileToImport),
+                            new TypeReference<List<TourFromFile>>() {
+                            });
         }
 
         protected TourFromFile() {}
