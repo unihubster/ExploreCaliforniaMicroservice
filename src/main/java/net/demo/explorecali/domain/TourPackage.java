@@ -25,6 +25,10 @@ public class TourPackage {
         this.name = name;
     }
 
+    public String getId() {
+        return code;
+    }
+
     public String getCode() {
         return code;
     }
