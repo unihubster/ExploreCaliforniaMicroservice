@@ -24,7 +24,7 @@ public interface TourPackageRepository extends CrudRepository<TourPackage, Strin
 
     @Override
     @RestResource(exported = false)
-    void deleteById(String id);
+    void deleteById(String code);
 
     @Override
     @RestResource(exported = false)
