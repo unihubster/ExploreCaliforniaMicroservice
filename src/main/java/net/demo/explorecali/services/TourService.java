@@ -1,5 +1,7 @@
 package net.demo.explorecali.services;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,17 @@ public class TourService {
 
     public long getTotalNumberOfTours() {
         return tourRepository.count();
+    }
+
+    /**
+     * Verify and return the Tour given a tourId.
+     *
+     * @param tourId tour identifier
+     * @return the found Tour
+     * @throws NoSuchElementException if no Tour found.
+     */
+    public Tour verifyTour(long tourId) throws NoSuchElementException {
+        return tourRepository.findById(tourId)
+                .orElseThrow(() -> new NoSuchElementException("Tour does not exist " + tourId));
     }
 }

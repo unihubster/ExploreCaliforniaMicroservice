@@ -16,16 +16,36 @@ Spring DATA REST provides HATEOAS.
 
 GET:
 
-http://localhost:8080/api/v1.0
+http://localhost:8080/explorecali/api/v1.0
 
-http://localhost:8080/api/v1.0/tourPackages/search/
+http://localhost:8080/explorecali/api/v1.0/packages/BC
 
-http://localhost:8080/api/v1.0/tourPackages/search/findByName?name=Backpack%20Cal
+http://localhost:8080/explorecali/api/v1.0/packages/search/
 
-http://localhost:8080/api/v1.0/tours
+http://localhost:8080/explorecali/api/v1.0/packages/search/findByName?name=Backpack%20Cal
 
-http://localhost:8080/api/v1.0/tours/search
+http://localhost:8080/explorecali/api/v1.0/tours
 
-http://localhost:8080/api/v1.0/tours/search/findByTourPackageCode?code=BC
+http://localhost:8080/explorecali/api/v1.0/tours/search
 
-http://localhost:8080/api/v1.0/tours?page=2&size=3&sort=title,desc
+http://localhost:8080/explorecali/api/v1.0/tours/search/findByTourPackageCode?code=BC
+
+http://localhost:8080/explorecali/api/v1.0/tours?page=2&size=3&sort=title,desc
+
+Post
+
+http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
+with JSON body
+{
+    "score": 5,
+    "comment": "It was great!",
+    "customerId": 123
+}
+
+http://localhost:8080/explorecali/api/v1.0/tours/11111/ratings with JSON body.
+400 status is returned because there is no such tour Id
+
+DELETE
+
+http://localhost:8080/explorecali/api/v1.0/packages/BC doesn't delete because not allowed
+
