@@ -1,9 +1,10 @@
 package net.demo.explorecali.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,15 +49,17 @@ public class TourRatingController {
     }
 
     /**
-     * Lookup a the Ratings for a tour.
+     * Lookup a page of Ratings for a tour.
      *
-     * @param tourId Tour Identifier
-     * @return All Tour Ratings as RatingDto's
+     * @param tourId   Tour Identifier
+     * @param pageable paging details
+     * @return Requested page of Tour Ratings as RatingDto's
      */
     @GetMapping
-    public List<RatingDto> getAllRaringsForTour(
-            @PathVariable(value = "tourId") long tourId) {
-        return tourRatingService.getAllRaringsForTour(tourId);
+    public Page<RatingDto> getRaringsForTour(
+            @PathVariable(value = "tourId") long tourId,
+            Pageable pageable) {
+        return tourRatingService.getPageableRaringsForTour(tourId, pageable);
     }
 
     /**

@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.demo.explorecali.domain.Tour;
@@ -52,6 +55,22 @@ public class TourRatingService {
                 .stream()
                 .map(RatingDto::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Lookup a page of Ratings for a tour.
+     *
+     * @param tourId   Tour Identifier
+     * @param pageable paging details
+     * @return Requested page of Tour Ratings as RatingDto's
+     */
+    public Page<RatingDto> getPageableRaringsForTour(long tourId, Pageable pageable) {
+        tourService.verifyTour(tourId);
+        Page<TourRating> ratings = tourRatingRepository.findByPkTourId(tourId, pageable);
+        return new PageImpl<>(
+                ratings.get().map(RatingDto::new).collect(Collectors.toList()),
+                pageable,
+                ratings.getTotalElements());
     }
 
     /**
