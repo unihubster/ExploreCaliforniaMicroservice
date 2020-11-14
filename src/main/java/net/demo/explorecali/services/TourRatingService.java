@@ -70,4 +70,61 @@ public class TourRatingService {
                 .orElseThrow(() -> new NoSuchElementException("Tour has no ratings")));
     }
 
+    /**
+     * Update score and comment of a Tour Rating
+     *
+     * @param tourId    tour identifier
+     * @param ratingDto rating Data Transfer Object
+     * @return The modified Rating DTO.
+     */
+    public RatingDto updateWithPut(long tourId, RatingDto ratingDto) {
+        TourRating rating = verifyTourRating(tourId, ratingDto.getCustomerId());
+        rating.setScore(ratingDto.getScore());
+        rating.setComment(ratingDto.getComment());
+        return new RatingDto(tourRatingRepository.save(rating));
+    }
+
+    /**
+     * Update score or comment of a Tour Rating
+     *
+     * @param tourId    tour identifier
+     * @param ratingDto rating Data Transfer Object
+     * @return The modified Rating DTO.
+     */
+    public RatingDto updateWithPatch(long tourId, RatingDto ratingDto) {
+        TourRating rating = verifyTourRating(tourId, ratingDto.getCustomerId());
+        if (ratingDto.getScore() != null) {
+            rating.setScore(ratingDto.getScore());
+        }
+        if (ratingDto.getComment() != null) {
+            rating.setComment(ratingDto.getComment());
+        }
+        return new RatingDto(tourRatingRepository.save(rating));
+    }
+
+    /**
+     * Delete a Rating of a tour made by a customer
+     *
+     * @param tourId     tour identifier
+     * @param customerId customer identifier
+     */
+    public void delete(long tourId, long customerId) {
+        TourRating rating = verifyTourRating(tourId, customerId);
+        tourRatingRepository.delete(rating);
+    }
+
+    /**
+     * Verify and return the TourRating for a particular tourId and Customer
+     * 
+     * @param tourId     tour identifier
+     * @param customerId customer identifier
+     * @return the found TourRating
+     * @throws NoSuchElementException if no TourRating found
+     */
+    private TourRating verifyTourRating(long tourId, long customerId) throws NoSuchElementException {
+        return tourRatingRepository
+                .findByPkTourIdAndPkCustomerId(tourId, customerId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        String.format("Tour-Rating pair for request %d for customer %d", tourId, customerId)));
+    }
 }

@@ -49,9 +49,31 @@ with JSON body
 - http://localhost:8080/explorecali/api/v1.0/tours/11111/ratings with JSON body.
 404 http status is returned because there is no such tour Id
 
+#### PUT
+
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
+with JSON body
+{
+    "score": 3,
+    "comment": "It was not good!",
+    "customerId": 123
+}
+
+#### PATCH
+
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
+with JSON body
+{
+    "score": 4,
+    "comment": "It was good!",
+    "customerId": 123
+}
+
 #### DELETE
 
 - http://localhost:8080/explorecali/api/v1.0/packages/BC doesn't delete because not allowed
+
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings/123
 
 
 ### ToDo:

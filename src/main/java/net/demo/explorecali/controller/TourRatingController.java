@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,7 +29,6 @@ import net.demo.explorecali.services.TourRatingService;
 public class TourRatingController {
     TourRatingService tourRatingService;
 
-    @Autowired
     public TourRatingController(TourRatingService tourRatingService) {
         this.tourRatingService = tourRatingService;
     }
@@ -68,6 +69,47 @@ public class TourRatingController {
     public Map<String, Double> getAverage(
             @PathVariable(value = "tourId") long tourId) {
         return tourRatingService.getAverage(tourId);
+    }
+
+    /**
+     * Update score and comment of a Tour Rating
+     *
+     * @param tourId    tour identifier
+     * @param ratingDto rating Data Transfer Object
+     * @return The modified Rating DTO.
+     */
+    @PutMapping
+    public RatingDto updateWithPut(
+            @PathVariable(value = "tourId") long tourId,
+            @RequestBody @Validated RatingDto ratingDto) {
+        return tourRatingService.updateWithPut(tourId, ratingDto);
+    }
+
+    /**
+     * Update score or comment of a Tour Rating
+     *
+     * @param tourId    tour identifier
+     * @param ratingDto rating Data Transfer Object
+     * @return The modified Rating DTO.
+     */
+    @PatchMapping
+    public RatingDto updateWithPatch(
+            @PathVariable(value = "tourId") long tourId,
+            @RequestBody @Validated RatingDto ratingDto) {
+        return tourRatingService.updateWithPatch(tourId, ratingDto);
+    }
+
+    /**
+     * Delete a Rating of a tour made by a customer
+     *
+     * @param tourId     tour identifier
+     * @param customerId customer identifier
+     */
+    @DeleteMapping(path = "/{customerId}")
+    public void delete(
+            @PathVariable(value = "tourId") long tourId,
+            @PathVariable(value = "customerId") long customerId) {
+        tourRatingService.delete(tourId, customerId);
     }
 
     /**
