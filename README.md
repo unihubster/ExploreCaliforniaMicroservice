@@ -32,6 +32,10 @@ Spring DATA REST provides HATEOAS.
 
 - http://localhost:8080/explorecali/api/v1.0/tours?page=2&size=3&sort=title,desc
 
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
+
+- http://localhost:8080/explorecali/api/v1.0/tours/1/ratings/average
+
 #### POST
 
 - http://localhost:8080/explorecali/api/v1.0/tours/1/ratings
