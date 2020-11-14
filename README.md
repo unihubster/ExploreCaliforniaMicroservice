@@ -3,7 +3,7 @@
 This is a simple Spring Boot RESTful application with some data about "Explore California" tours.
 
 Default port is 8080 but it can be changed by terminal command when you start Spring Boot application:
-"java -jar -Dserver.port=9090 exploreca-1.0.0.jar". So, you can run several instances of the application on the same station.
+"java -jar -Dserver.port=9090 explorecali-1.0.0.jar". So, you can run several instances of the application on the same station.
 
 H2 in-memory database is used. ExploreCaliforniaApplication fulfills the database with data from ExploreCalifornia.json.
 The path to the JSON with initial data can be changed in application.properties in explorecali.importjsonfile property.
