@@ -3,17 +3,12 @@ package net.demo.explorecali.services;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import net.demo.explorecali.domain.Tour;
 import net.demo.explorecali.domain.TourRating;
-import net.demo.explorecali.domain.TourRatingPk;
-import net.demo.explorecali.dto.RatingDto;
 import net.demo.explorecali.repositories.TourRatingRepository;
 
 @Service
@@ -29,17 +24,15 @@ public class TourRatingService {
     /**
      * Create a Tour Rating.
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating data transfer object
+     * @param tourId     tour identifier
+     * @param tourRating rating data transfer object
      */
-    public void create(long tourId, RatingDto ratingDto) {
-        Tour tour = tourService.verifyTour(tourId);
-        tourRatingRepository.save(
-                new TourRating(
-                        new TourRatingPk(tour, ratingDto.getCustomerId()),
-                        ratingDto.getScore(),
-                        ratingDto.getComment()));
-
+    public void create(String tourId, TourRating tourRating) {
+        tourService.verifyTour(tourId);
+        tourRatingRepository.save(new TourRating(tourId,
+                                                 tourRating.getCustomerId(),
+                                                 tourRating.getScore(),
+                                                 tourRating.getComment()));
     }
 
     /**
@@ -48,13 +41,8 @@ public class TourRatingService {
      * @param tourId Tour Identifier
      * @return All Tour Ratings as RatingDto's
      */
-    public List<RatingDto> getAllRaringsForTour(long tourId) {
-        tourService.verifyTour(tourId);
-        return tourRatingRepository
-                .findByPkTourId(tourId)
-                .stream()
-                .map(RatingDto::new)
-                .collect(Collectors.toList());
+    public List<TourRating> getAllRaringsForTour(String tourId) {
+        return tourRatingRepository.findByTourId(tourId);
     }
 
     /**
@@ -64,13 +52,8 @@ public class TourRatingService {
      * @param pageable paging details
      * @return Requested page of Tour Ratings as RatingDto's
      */
-    public Page<RatingDto> getPageableRaringsForTour(long tourId, Pageable pageable) {
-        tourService.verifyTour(tourId);
-        Page<TourRating> ratings = tourRatingRepository.findByPkTourId(tourId, pageable);
-        return new PageImpl<>(
-                ratings.get().map(RatingDto::new).collect(Collectors.toList()),
-                pageable,
-                ratings.getTotalElements());
+    public Page<TourRating> getPageableRaringsForTour(String tourId, Pageable pageable) {
+        return tourRatingRepository.findByTourId(tourId, pageable);
     }
 
     /**
@@ -79,10 +62,10 @@ public class TourRatingService {
      * @param tourId tour identifier
      * @return Tuple of "average" and the average value.
      */
-    public Map<String, Double> getAverage(long tourId) {
+    public Map<String, Double> getAverage(String tourId) {
         tourService.verifyTour(tourId);
         return Map.of("average", tourRatingRepository
-                .findByPkTourId(tourId)
+                .findByTourId(tourId)
                 .stream()
                 .mapToInt(TourRating::getScore)
                 .average()
@@ -92,33 +75,33 @@ public class TourRatingService {
     /**
      * Update score and comment of a Tour Rating
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating Data Transfer Object
-     * @return The modified Rating DTO.
+     * @param tourId     tour identifier
+     * @param tourRating rating Data Transfer Object
+     * @return The modified TourRating as DTO.
      */
-    public RatingDto updateWithPut(long tourId, RatingDto ratingDto) {
-        TourRating rating = verifyTourRating(tourId, ratingDto.getCustomerId());
-        rating.setScore(ratingDto.getScore());
-        rating.setComment(ratingDto.getComment());
-        return new RatingDto(tourRatingRepository.save(rating));
+    public TourRating updateWithPut(String tourId, TourRating tourRating) {
+        TourRating rating = verifyTourRating(tourId, tourRating.getCustomerId());
+        rating.setScore(tourRating.getScore());
+        rating.setComment(tourRating.getComment());
+        return tourRatingRepository.save(rating);
     }
 
     /**
      * Update score or comment of a Tour Rating
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating Data Transfer Object
-     * @return The modified Rating DTO.
+     * @param tourId     tour identifier
+     * @param tourRating rating Data Transfer Object
+     * @return The modified TourRating as DTO.
      */
-    public RatingDto updateWithPatch(long tourId, RatingDto ratingDto) {
-        TourRating rating = verifyTourRating(tourId, ratingDto.getCustomerId());
-        if (ratingDto.getScore() != null) {
-            rating.setScore(ratingDto.getScore());
+    public TourRating updateWithPatch(String tourId, TourRating tourRating) {
+        TourRating rating = verifyTourRating(tourId, tourRating.getCustomerId());
+        if (tourRating.getScore() != null) {
+            rating.setScore(tourRating.getScore());
         }
-        if (ratingDto.getComment() != null) {
-            rating.setComment(ratingDto.getComment());
+        if (tourRating.getComment() != null) {
+            rating.setComment(tourRating.getComment());
         }
-        return new RatingDto(tourRatingRepository.save(rating));
+        return tourRatingRepository.save(rating);
     }
 
     /**
@@ -127,7 +110,7 @@ public class TourRatingService {
      * @param tourId     tour identifier
      * @param customerId customer identifier
      */
-    public void delete(long tourId, long customerId) {
+    public void delete(String tourId, long customerId) {
         TourRating rating = verifyTourRating(tourId, customerId);
         tourRatingRepository.delete(rating);
     }
@@ -140,10 +123,13 @@ public class TourRatingService {
      * @return the found TourRating
      * @throws NoSuchElementException if no TourRating found
      */
-    private TourRating verifyTourRating(long tourId, long customerId) throws NoSuchElementException {
+    private TourRating verifyTourRating(String tourId, long customerId) throws NoSuchElementException {
         return tourRatingRepository
-                .findByPkTourIdAndPkCustomerId(tourId, customerId)
-                .orElseThrow(() -> new NoSuchElementException(
-                        String.format("Tour-Rating pair for request %d for customer %d", tourId, customerId)));
+                .findByTourIdAndCustomerId(tourId, customerId)
+                .orElseThrow(
+                        () -> new NoSuchElementException(
+                                                         String.format(
+                                                                 "Tour-Rating pair for request %d for customer %d",
+                                                                 tourId, customerId)));
     }
 }

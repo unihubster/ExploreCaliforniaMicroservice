@@ -2,14 +2,32 @@ package net.demo.explorecali.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import net.demo.explorecali.domain.Tour;
 
-public interface TourRepository extends PagingAndSortingRepository<Tour, Long> {
+public interface TourRepository extends PagingAndSortingRepository<Tour, String> {
 
-    Page<Tour> findByTourPackageCode(String code, Pageable pageable);
+    /**
+     * Find Tours associated with the Tour Package.
+     *
+     * @param code tour package code
+     * @return List of found tours.
+     */
+    Page<Tour> findByTourPackageCode(@Param("code") String code, Pageable pageable);
+
+    /**
+     * Only return the main fields of a Tour, not the details
+     *
+     * @param code tour package code
+     * @return tours without details
+     */
+    @Query(value = "{'tourPackageCode' : ?0 }",
+            fields = "{ 'id':1, 'title':1, 'tourPackageCode':1, 'tourPackageName':1}")
+    Page<Tour> findSummaryByTourPackageCode(@Param("code") String code, Pageable pageable);
 
     // Another way to control following is to use Spring Security
     @Override
@@ -22,7 +40,7 @@ public interface TourRepository extends PagingAndSortingRepository<Tour, Long> {
 
     @Override
     @RestResource(exported = false)
-    void deleteById(Long id);
+    void deleteById(String id);
 
     @Override
     @RestResource(exported = false)

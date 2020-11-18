@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.demo.explorecali.dto.RatingDto;
+import net.demo.explorecali.domain.TourRating;
 import net.demo.explorecali.services.TourRatingService;
 
 /**
@@ -37,15 +37,15 @@ public class TourRatingController {
     /**
      * Create a Tour Rating.
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating data transfer object
+     * @param tourId     tour identifier
+     * @param tourRating rating data transfer object
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createTourRating(
-            @PathVariable(value = "tourId") long tourId,
-            @RequestBody @Validated RatingDto ratingDto) {
-        tourRatingService.create(tourId, ratingDto);
+            @PathVariable(value = "tourId") String tourId,
+            @RequestBody @Validated TourRating tourRating) {
+        tourRatingService.create(tourId, tourRating);
     }
 
     /**
@@ -56,8 +56,8 @@ public class TourRatingController {
      * @return Requested page of Tour Ratings as RatingDto's
      */
     @GetMapping
-    public Page<RatingDto> getRaringsForTour(
-            @PathVariable(value = "tourId") long tourId,
+    public Page<TourRating> getRarings(
+            @PathVariable(value = "tourId") String tourId,
             Pageable pageable) {
         return tourRatingService.getPageableRaringsForTour(tourId, pageable);
     }
@@ -70,36 +70,36 @@ public class TourRatingController {
      */
     @GetMapping(path = "/average")
     public Map<String, Double> getAverage(
-            @PathVariable(value = "tourId") long tourId) {
+            @PathVariable(value = "tourId") String tourId) {
         return tourRatingService.getAverage(tourId);
     }
 
     /**
      * Update score and comment of a Tour Rating
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating Data Transfer Object
-     * @return The modified Rating DTO.
+     * @param tourId     tour identifier
+     * @param tourRating rating Data Transfer Object
+     * @return The modified TourRating as DTO.
      */
     @PutMapping
-    public RatingDto updateWithPut(
-            @PathVariable(value = "tourId") long tourId,
-            @RequestBody @Validated RatingDto ratingDto) {
-        return tourRatingService.updateWithPut(tourId, ratingDto);
+    public TourRating updateWithPut(
+            @PathVariable(value = "tourId") String tourId,
+            @RequestBody @Validated TourRating tourRating) {
+        return tourRatingService.updateWithPut(tourId, tourRating);
     }
 
     /**
      * Update score or comment of a Tour Rating
      *
-     * @param tourId    tour identifier
-     * @param ratingDto rating Data Transfer Object
-     * @return The modified Rating DTO.
+     * @param tourId     tour identifier
+     * @param tourRating rating Data Transfer Object
+     * @return The modified TourRating as DTO.
      */
     @PatchMapping
-    public RatingDto updateWithPatch(
-            @PathVariable(value = "tourId") long tourId,
-            @RequestBody @Validated RatingDto ratingDto) {
-        return tourRatingService.updateWithPatch(tourId, ratingDto);
+    public TourRating updateWithPatch(
+            @PathVariable(value = "tourId") String tourId,
+            @RequestBody @Validated TourRating tourRating) {
+        return tourRatingService.updateWithPatch(tourId, tourRating);
     }
 
     /**
@@ -110,7 +110,7 @@ public class TourRatingController {
      */
     @DeleteMapping(path = "/{customerId}")
     public void delete(
-            @PathVariable(value = "tourId") long tourId,
+            @PathVariable(value = "tourId") String tourId,
             @PathVariable(value = "customerId") long customerId) {
         tourRatingService.delete(tourId, customerId);
     }
