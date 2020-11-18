@@ -1,6 +1,7 @@
 # Simple RESTful Spring Boot Microservice with JPA
 
 This is a simple Spring Boot RESTful application with some data about "Explore California" tours.
+Branch called "mongo" contains the application refactored to use embedded NoSQL MondoDB instead of relational H2.
 
 Default port is 8080 but it can be changed by terminal command when you start Spring Boot application:
 "java -jar -Dserver.port=9090 explorecali-1.0.0.jar". So, you can run several instances of the application on the same station.
@@ -84,4 +85,4 @@ with JSON body
 
 ### ToDo:
 * Apply Builder patterns for the entities
-* Improve H2 database initialization with data
+* Improve embedded database initialization with data
